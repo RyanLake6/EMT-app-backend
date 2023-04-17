@@ -33,6 +33,6 @@ def create_app():
     from src.managers.managers import managers
 
     # Register the routes that we just imported so they can be properly handled
-    app.register_blueprint(managers,   url_prefix='/c')
+    app.register_blueprint(managers,   url_prefix='/m')
 
     return app
