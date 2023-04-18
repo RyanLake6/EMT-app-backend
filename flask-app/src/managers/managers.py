@@ -20,12 +20,27 @@ managers = Blueprint('managers', __name__)
 #     the_response.mimetype = 'application/json'
 #     return the_response
 
+# testing
+@managers.route('/test', methods=['GET'])
+def test():
+    cursor = db.get_db().cursor()
+    cursor.execute("select * from Patient")
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    # return "hit this endpoint"
+    return the_response
 
 # get request for maintanence table datetimes based on call number
-@managers.route('/maintanence/<callNum>', methods=['GET'])
+@managers.route('/maintenence/<callNum>', methods=['GET'])
 def get_maintanence_datetimes(callNum):
     cursor = db.get_db().cursor()
-    cursor.execute("SELECT * FROM Inventory")
+    cursor.execute("select * from Patient")
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
