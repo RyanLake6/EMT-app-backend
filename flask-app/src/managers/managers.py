@@ -5,36 +5,37 @@ from src import db
 
 managers = Blueprint('managers', __name__)
 
-# Should return all call numbers associated with the employee id
-@managers.route('/employee/<employeeID>', methods=['GET'])
-def get_employee(employeeID):
-    cursor = db.get_db().cursor()
-    cursor.execute('SELECT * FROM Employees empl join Emergency emerg using emerg.Run')
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
+# # Should return all call numbers associated with the employee id
+# @managers.route('/employee/<employeeID>', methods=['GET'])
+# def get_employee(employeeID):
+#     cursor = db.get_db().cursor()
+#     cursor.execute('SELECT * FROM Employees empl join Emergency emerg using emerg.Run')
+#     row_headers = [x[0] for x in cursor.description]
+#     json_data = []
+#     theData = cursor.fetchall()
+#     for row in theData:
+#         json_data.append(dict(zip(row_headers, row)))
+#     the_response = make_response(jsonify(json_data))
+#     the_response.status_code = 200
+#     the_response.mimetype = 'application/json'
+#     return the_response
 
 
 # get request for maintanence table datetimes based on call number
 @managers.route('/maintanence/<callNum>', methods=['GET'])
 def get_maintanence_datetimes(callNum):
     cursor = db.get_db().cursor()
-    cursor.execute('FILL IN')
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
+    # cursor.execute('FILL IN')
+    # row_headers = [x[0] for x in cursor.description]
+    # json_data = []
+    # theData = cursor.fetchall()
+    # for row in theData:
+    #     json_data.append(dict(zip(row_headers, row)))
+    # the_response = make_response(jsonify(json_data))
+    # the_response.status_code = 200
+    # the_response.mimetype = 'application/json'
+    return "hit this endpoint"
+    # return the_response
 
 
 # get request for maintanence table based on datetime
@@ -164,7 +165,7 @@ def get_employee_ids(callNum):
     the_response.mimetype = 'application/json'
     return the_response
 
-# get request for employees table based on call number
+# get request for employees table based on employee id
 @managers.route('/employee/<employeeID>', methods=['GET'])
 def get_employee(employeeID):
     cursor = db.get_db().cursor()
@@ -237,7 +238,7 @@ def update_truck(callNum):
 
 # patch request for times table based on call number
 @managers.route('/times/<callNum>', methods=['PUT'])
-def update_times(callNum):
+def update_times_callNum(callNum):
     updated_info = request.get_json()
 
     query = 'FILL IN'
