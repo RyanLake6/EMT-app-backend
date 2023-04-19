@@ -5,21 +5,6 @@ from src import db
 
 managers = Blueprint('managers', __name__)
 
-# # Should return all call numbers associated with the employee id
-# @managers.route('/employee/<employeeID>', methods=['GET'])
-# def get_employee(employeeID):
-#     cursor = db.get_db().cursor()
-#     cursor.execute('SELECT * FROM Employees empl join Emergency emerg using emerg.Run')
-#     row_headers = [x[0] for x in cursor.description]
-#     json_data = []
-#     theData = cursor.fetchall()
-#     for row in theData:
-#         json_data.append(dict(zip(row_headers, row)))
-#     the_response = make_response(jsonify(json_data))
-#     the_response.status_code = 200
-#     the_response.mimetype = 'application/json'
-#     return the_response
-
 # testing
 @managers.route('/test', methods=['GET'])
 def test():
@@ -36,28 +21,15 @@ def test():
     # return "hit this endpoint"
     return the_response
 
-# get request for maintanence table datetimes based on call number
-@managers.route('/maintenence/<callNum>', methods=['GET'])
-def get_maintanence_datetimes(callNum):
+# Should return the employee id based of employee first and last name
+@managers.route('/employees/<firstName>/<lastName>', methods=['GET'])
+def get_employee(firstName, lastName):
     cursor = db.get_db().cursor()
-    cursor.execute("select * from Shifts")
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    # return "hit this endpoint"
-    return the_response
-
-
-# get request for maintanence table based on datetime
-@managers.route('/maintanence/<datetime>', methods=['GET'])
-def get_maintanence(datetime):
-    cursor = db.get_db().cursor()
-    cursor.execute('FILL IN')
+    query = '''
+          SELECT employeeID FROM Employees WHERE Employees.firstName=%s AND Employees.lastName=%s
+            '''
+    args = (firstName, lastName)
+    cursor.execute(query, args)
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -68,12 +40,11 @@ def get_maintanence(datetime):
     the_response.mimetype = 'application/json'
     return the_response
 
-
-# get request for truck table based on call number
-@managers.route('/truck/<callNum>', methods=['GET'])
-def get_truck(callNum):
+# Should return all run numbers associated with that employee
+@managers.route('/runNumbers/<employeeID>', methods=['GET'])
+def get_runNumbers(employeeID):
     cursor = db.get_db().cursor()
-    cursor.execute('FILL IN')
+    cursor.execute('SELECT Emergency.runNumber FROM Emergency join EmergencyEmployee using (runNumber) join Employees using (employeeID) where Employees.employeeID={0}'.format(employeeID))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -84,12 +55,15 @@ def get_truck(callNum):
     the_response.mimetype = 'application/json'
     return the_response
 
-
-# get request for times table based on call number
-@managers.route('/times/<callNum>', methods=['GET'])
-def get_times(callNum):
+# Should return all Truck info based on the run number
+@managers.route('/Truck/<runNumber>', methods=['GET'])
+def get_truck(runNumber):
     cursor = db.get_db().cursor()
-    cursor.execute('FILL IN')
+    query = '''
+          SELECT Truck.truckID, Truck.licensePlate, Truck.model FROM Truck join Emergency using(truckID) WHERE Emergency.runNumber=%s
+            '''
+    args = (runNumber)
+    cursor.execute(query, args)
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -101,27 +75,15 @@ def get_times(callNum):
     return the_response
 
 
-
-# get request for survey table ids based on call number
-@managers.route('/surveys/<callNum>', methods=['GET'])
-def get_survey_ids(callNum):
+# Should return all Times info based on the run number
+@managers.route('/Times/<runNumber>', methods=['GET'])
+def get_times(runNumber):
     cursor = db.get_db().cursor()
-    cursor.execute('FILL IN')
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
-
-# get request for survey table based on survey ID
-@managers.route('/surveys/<surveyID>', methods=['GET'])
-def get_survey(surveyID):
-    cursor = db.get_db().cursor()
-    cursor.execute('FILL IN')
+    query = '''
+          SELECT * FROM Times join Emergency using(runNumber) WHERE Times.runNumber=%s
+            '''
+    args = (runNumber)
+    cursor.execute(query, args)
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -133,11 +95,16 @@ def get_survey(surveyID):
     return the_response
 
 
-# get request for patient table based on call number
-@managers.route('/patient/<callNum>', methods=['GET'])
-def get_patient(callNum):
+# Should return all Patient info based on the run number
+@managers.route('/Patient/<runNumber>', methods=['GET'])
+def get_patient(runNumber):
     cursor = db.get_db().cursor()
-    cursor.execute('FILL IN')
+    query = '''
+          SELECT Patient.firstName, Patient.lastName, Patient.dateOfBirth, Patient.MRN
+          FROM Patient join Emergency using (runNumber) where Emergency.runNumber=%s
+            '''
+    args = (runNumber)
+    cursor.execute(query, args)
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -149,11 +116,15 @@ def get_patient(callNum):
     return the_response
 
 
-# get request for shifts table based on call number
-@managers.route('/shifts/<callNum>', methods=['GET'])
-def get_shifts(callNum):
+# Should return all Employee info based on the employee id
+@managers.route('/Employee/<employeeID>', methods=['GET'])
+def get_employee_info(employeeID):
     cursor = db.get_db().cursor()
-    cursor.execute('FILL IN')
+    query = '''
+          SELECT * FROM Employees where employeeID=%s
+            '''
+    args = (employeeID)
+    cursor.execute(query, args)
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -165,178 +136,3 @@ def get_shifts(callNum):
     return the_response
 
 
-# get request for employees table based on call number
-@managers.route('/employees/<callNum>', methods=['GET'])
-def get_employee_ids(callNum):
-    cursor = db.get_db().cursor()
-    cursor.execute('FILL IN')
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
-
-# get request for employees table based on employee id
-@managers.route('/employee/<employeeID>', methods=['GET'])
-def get_employee(employeeID):
-    cursor = db.get_db().cursor()
-    cursor.execute('FILL IN')
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
-
-
-# get request for inventory table datetimes based on call number
-@managers.route('/inventory/<callNum>', methods=['GET'])
-def get_inventory_datetimes(callNum):
-    cursor = db.get_db().cursor()
-    cursor.execute('FILL IN')
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
-
-
-# get request for inventory table based on datetime
-@managers.route('/inventory/<datetime>', methods=['GET'])
-def get_inventory(datetime):
-    cursor = db.get_db().cursor()
-    cursor.execute('FILL IN')
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
-
-
-#############################
-# Now for the put requests:
-#############################
-
-
-
-# patch request for truck table based on call number
-@managers.route('/truck/<callNum>', methods=['PUT'])
-def update_truck(callNum):
-    updated_info = request.get_json()
-
-    query = 'FILL IN'
-    args = (updated_info['something'], 'and more ...')
-
-    cursor = db.get_db().cursor()
-    try:
-        cursor.execute(query, args) 
-        return "truck updated successfully"
-    except:
-        return "Error in updating truck"
-    
-
-
-# patch request for times table based on call number
-@managers.route('/times/<callNum>', methods=['PUT'])
-def update_times_callNum(callNum):
-    updated_info = request.get_json()
-
-    query = 'FILL IN'
-    args = (updated_info['something'], 'and more ...')
-
-    cursor = db.get_db().cursor()
-    try:
-        cursor.execute(query, args) 
-        return "times updated successfully"
-    except:
-        return "Error in updating times"
-
-
-# patch request for survey table based on call number
-@managers.route('/survey/<datetime>', methods=['PUT'])
-def update_times(datetime):
-    updated_info = request.get_json()
-
-    query = 'FILL IN'
-    args = (updated_info['something'], 'and more ...')
-
-    cursor = db.get_db().cursor()
-    try:
-        cursor.execute(query, args) 
-        return "times updated successfully"
-    except:
-        return "Error in updating times"
-    
-
-
-# patch request for patient table based on call number
-@managers.route('/patient/<callNum>', methods=['PUT'])
-def update_patient(callNum):
-    updated_info = request.get_json()
-
-    query = 'FILL IN'
-    args = (updated_info['something'], 'and more ...')
-
-    cursor = db.get_db().cursor()
-    try:
-        cursor.execute(query, args) 
-        return "times updated successfully"
-    except:
-        return "Error in updating times"
-    
-
-
-
-    
-
-
-# patch request for employees table based on call number
-@managers.route('/employees/<employeeID>', methods=['PUT'])
-def update_employee(employeeID):
-    updated_info = request.get_json()
-
-    query = 'FILL IN'
-    args = (updated_info['something'], 'and more ...')
-
-    cursor = db.get_db().cursor()
-    try:
-        cursor.execute(query, args) 
-        return "times updated successfully"
-    except:
-        return "Error in updating times"
-    
-
-
-# patch request for maintanence table based on call number
-@managers.route('/maintanence/<datetime>', methods=['PUT'])
-def update_maintanence(datetime):
-    updated_info = request.get_json()
-
-    query = 'FILL IN'
-    args = (updated_info['something'], 'and more ...')
-
-    cursor = db.get_db().cursor()
-    try:
-        cursor.execute(query, args) 
-        return "times updated successfully"
-    except:
-        return "Error in updating times"
-
-
-
-# patch request for shifts table based on call number
