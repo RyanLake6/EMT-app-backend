@@ -57,7 +57,7 @@ def add_insurance(MRN):
           INSERT INTO Insurance (subscriberID, groupNumber, provider, subscriberDateOfBirth, firstNameSubscriber, lastNameSubscriber, MRN)
           VALUES (%s, %s, %s, %s, %s, %s, %s)
   '''
-  args = (subscriber_id, provider, group_number, subscriber_dob, subscriber_first, subscriber_last, MRN)
+  args = (subscriber_id, group_number, provider, subscriber_dob, subscriber_first, subscriber_last, MRN)
   
   cursor = db.get_db().cursor()
 
