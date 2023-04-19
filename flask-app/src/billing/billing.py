@@ -9,7 +9,7 @@ billing = Blueprint('billing', __name__)
 @billing.route('/billing/<runNumber>', methods=['GET'])
 def get_billing(runNumber):
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT * FROM Billing WHERE runNumber EQUALS {0}'.format(runNumber))
+    cursor.execute('SELECT * FROM Billing WHERE runNumber = {0}'.format(runNumber))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -55,7 +55,9 @@ def add_card():
 def update_card():
     updated_info = request.get_json()
 
-    query = 'FILL IN'
+    query = '''
+            
+    '''
     args = (updated_info['something'], 'and more ...')
 
     cursor = db.get_db().cursor()

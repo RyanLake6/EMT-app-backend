@@ -9,7 +9,7 @@ insurance = Blueprint('insurance', __name__)
 @insurance.route('/insurance/<MRN>', methods=['GET'])
 def get_insurance(MRN):
   cursor = db.get_db().cursor()
-  cursor.execute('SELECT * FROM Insurance WHERE MRN EQUALS {0}'.format(MRN))
+  cursor.execute('SELECT * FROM Insurance WHERE MRN = {0}'.format(MRN))
   row_headers = [x[0] for x in cursor.description]
   json_data = []
   theData = cursor.fetchall()
@@ -66,7 +66,7 @@ def update_insurance(MRN):
               subscriberDateOfBirth = %s,
               firstNameSubscriber = %s,
               lastNameSubscriber = %s
-          WHERE MRN EQUALS %s
+          WHERE MRN = %s
   '''
   args = (subscriber_id, group_number, provider, subscriber_dob, subscriber_first, subscriber_last, MRN)
 
