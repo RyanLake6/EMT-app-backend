@@ -152,10 +152,23 @@
     "method": "GET",
     "sortNum": 80000,
     "created": "2023-04-19T19:28:22.836Z",
-    "modified": "2023-04-19T20:07:22.238Z",
+    "modified": "2023-04-19T20:08:03.144Z",
     "headers": [],
     "params": [],
-    "tests": []
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "count",
+        "value": "0"
+      }
+    ]
   },
   {
     "_id": "73c5401e-1cb7-4361-a466-953bef4a3af8",
