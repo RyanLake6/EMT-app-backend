@@ -116,6 +116,9 @@ def getDataByRunNumber(runNumber):
     return the_response
 
 
+#####################################################
+#NEEDS TO BE WRITTEN
+#####################################################
 @patients.route('/patient/complaint', methods=['POST'])
 def send_complaint(MRN):
     the_data = request.get_json()
