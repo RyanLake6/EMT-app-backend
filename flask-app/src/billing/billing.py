@@ -67,6 +67,9 @@ def get_cc(cardNumber):
 #     return the_response
 
 
+#####################################################
+#NEEDS TO BE WRITTEN
+#####################################################
 @billing.route('/billing/<CurrentCardNumber>/<NewCardNumber>', methods=['PUT'])
 def update_card():
     updated_info = request.get_json()
@@ -84,6 +87,9 @@ def update_card():
         return "Error in updating billing"
 
 
+#####################################################
+#NEEDS TO BE WRITTEN
+#####################################################
 @billing.route('/billing/<runNumber>/<amount>', methods=['PUT'])
 def pay_bill(runNumber, amount):
     updated_info = request.get_json()
