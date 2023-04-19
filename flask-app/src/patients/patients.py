@@ -114,3 +114,25 @@ def getDataByRunNumber(runNumber):
     cursor.close()
 
     return the_response
+
+
+@patients.route('/patient/complaint', methods=['POST'])
+def send_complaint(MRN):
+    the_data = request.get_json()
+    arg1 = the_data['']
+    arg2 = the_data['']
+    arg3 = the_data['']
+
+    current_app.logger.info(the_data)
+
+    cursor = db.get_db().cursor()
+    query = "INSERT INTO products (product_name, description, category, list_price) VALUES ('"
+    query += p_name + "', '" + p_desc + "', '" + p_category + "', " + str(p_price) + ")"
+
+    current_app.logger.info(query)
+    
+    cursor.execute(query)
+    db.get_db().commit()
+    cursor.close()
+
+    return "success!"
