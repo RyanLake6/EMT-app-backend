@@ -1,0 +1,30 @@
+[
+  {
+    "_id": "81ac66f1-83ea-4f00-908c-1d3d732aab06",
+    "colName": "patient",
+    "created": "2023-04-19T19:20:08.711Z",
+    "sortNum": 10000,
+    "folders": []
+  },
+  {
+    "_id": "d64c5452-d751-4dcf-89ff-5cda25122304",
+    "colName": "insurance",
+    "created": "2023-04-19T19:32:26.980Z",
+    "sortNum": 20000,
+    "folders": []
+  },
+  {
+    "_id": "c1280c82-5ece-48f8-b5df-c5b1ebf0ae8a",
+    "colName": "manager",
+    "created": "2023-04-19T19:32:35.119Z",
+    "sortNum": 30000,
+    "folders": []
+  },
+  {
+    "_id": "084cc08e-26a4-438a-939b-af2235bdc4b8",
+    "colName": "billing",
+    "created": "2023-04-19T19:32:38.662Z",
+    "sortNum": 40000,
+    "folders": []
+  }
+]

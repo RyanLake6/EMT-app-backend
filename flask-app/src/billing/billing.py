@@ -75,16 +75,22 @@ def update_card():
     updated_info = request.get_json()
 
     query = '''
-            
+            UPDATE Billing
+            SET cost = %s,
+                total = %s,
+                tax = %s,
+                runNumber = %s,
+                cardNumber = %s,
+            WHERE runNumber = %s
     '''
-    args = (updated_info['something'], 'and more ...')
+    args = (updated_info['cost'], updated_info['total'], updated_info['tax'], runNumber, updated_info['cardNumber'], runNumber)
 
     cursor = db.get_db().cursor()
     try:
-        cursor.execute(query, args) 
-        return "billing updated successfully"
+        cursor.execute(query, args)
+        return "Billing updated successfully"
     except:
-        return "Error in updating billing"
+        return "Error in updating Billing"
 
 
 #####################################################
@@ -100,7 +106,7 @@ def pay_bill(runNumber, amount):
 
     cursor = db.get_db().cursor()
     try:
-        cursor.execute(query, args) 
+        cursor.execute(query)
         return "billing updated successfully"
     except:
         return "Error in updating billing"
