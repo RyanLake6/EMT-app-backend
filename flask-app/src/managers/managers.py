@@ -9,7 +9,7 @@ managers = Blueprint('managers', __name__)
 @managers.route('/test', methods=['GET'])
 def test():
     cursor = db.get_db().cursor()
-    cursor.execute("select * from Shifts")
+    cursor.execute("select * from Maintenance")
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -136,3 +136,64 @@ def get_employee_info(employeeID):
     return the_response
 
 
+# Should return all Survey info based on the run number
+@managers.route('/Surveys/<runNumber>', methods=['GET'])
+def get_surveys(runNumber):
+    cursor = db.get_db().cursor()
+    query = '''
+          SELECT Survey.rating, Survey.response, Survey.MRN
+            FROM Survey join Patient using (MRN) where runNumber=%s
+            '''
+    args = (runNumber)
+    cursor.execute(query, args)
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+
+
+# Should return all maintanence info based on the run number
+@managers.route('/Maintenance/<runNumber>', methods=['GET'])
+def get_maintenance(runNumber):
+    cursor = db.get_db().cursor()
+    query = '''
+          SELECT Maintenance.fluidsChecked, Maintenance.inspectionExpiration, Maintenance.dateTime, Maintenance.needsService, Maintenance.truckID
+            FROM Maintenance join Truck using(truckID) join Emergency using (truckID) where Emergency.runNumber=%s
+            '''
+    args = (runNumber)
+    cursor.execute(query, args)
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+
+
+# Should return all Inventory info based on the run number
+@managers.route('/Inventory/<runNumber>', methods=['GET'])
+def get_inventory(runNumber):
+    cursor = db.get_db().cursor()
+    query = '''
+          SELECT Inventory.dateTime, Inventory.expirationDate, Inventory.name, Inventory.count, Inventory.truckID
+            FROM Inventory join Truck using(truckID) join Emergency using (truckID) where Emergency.runNumber=%s
+            '''
+    args = (runNumber)
+    cursor.execute(query, args)
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
