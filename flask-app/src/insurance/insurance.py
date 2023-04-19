@@ -5,7 +5,7 @@ from src import db
 
 insurance = Blueprint('insurance', __name__)
 
-@insurance.route('/insurance/<MRN>', methods=['GET'])
+@insurance.route('/provider/<MRN>', methods=['GET'])
 def get_provider(MRN):
   cursor = db.get_db().cursor()
   cursor.execute('SELECT provider FROM Insurance WHERE MRN = {0}'.format(MRN))
@@ -21,11 +21,16 @@ def get_provider(MRN):
   return the_response
 
 # Get example
-@insurance.route('/insurance/<MRN>/', methods=['GET'])
+@insurance.route('/insurance/<MRN>', methods=['GET'])
 def get_insurance(MRN):
   the_data = request.get_json()
   cursor = db.get_db().cursor()
-  cursor.execute('SELECT subscriberID, groupNumber, subscriberDateOfBirth, firstNameSubscriber, lastNameSubscriber FROM Insurance WHERE MRN = {0} AND provider = {1}'.format(MRN, the_data['provider']))
+
+  query = 'SELECT subscriberID, groupNumber, subscriberDateOfBirth, firstNameSubscriber, lastNameSubscriber FROM Insurance WHERE MRN = %s AND provider = %s'
+
+  args = (MRN, the_data['provider'])
+
+  cursor.execute(query, args)
   row_headers = [x[0] for x in cursor.description]
   json_data = []
   theData = cursor.fetchall()
@@ -99,16 +104,16 @@ def update_insurance(MRN):
 
 
 @insurance.route('/insurance/<MRN>', methods=['DELETE'])
-def delete_insurance():
+def delete_insurance(MRN):
   updated_info = request.get_json()
 
-  query = 'DELETE FROM Insurance WHERE provider = %s AND subscriberID = %s'
-  args = (updated_info['provider'], updated_info['subscriberID'])
+  query = 'DELETE FROM Insurance WHERE MRN = %s AND provider = %s AND subscriberID = %s'
+  args = (MRN, updated_info['provider'], updated_info['subscriberID'])
 
   cursor = db.get_db().cursor()
   try:
       cursor.execute(query, args) 
-      return "Insurance updated successfully"
+      return "Insurance deleted successfully"
   except:
-      return "Error in updating insurance"
+      return "Error in deleting insurance"
   

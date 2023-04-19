@@ -152,7 +152,7 @@
     "method": "GET",
     "sortNum": 80000,
     "created": "2023-04-19T19:28:22.836Z",
-    "modified": "2023-04-19T19:28:38.714Z",
+    "modified": "2023-04-19T20:07:22.238Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -187,6 +187,179 @@
         "custom": "",
         "action": "contains",
         "value": "diabetes"
+      }
+    ]
+  },
+  {
+    "_id": "1b34b3e7-ea8c-4e16-9bc2-06b98cb8d1ca",
+    "colId": "d64c5452-d751-4dcf-89ff-5cda25122304",
+    "containerId": "",
+    "name": "test-get_provider",
+    "url": "localhost:8001/i/provider/987",
+    "method": "GET",
+    "sortNum": 10000,
+    "created": "2023-04-19T19:33:06.763Z",
+    "modified": "2023-04-19T19:37:26.317Z",
+    "headers": [],
+    "params": [],
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "count",
+        "value": "2"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "Anthem"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "Blue Cross"
+      }
+    ]
+  },
+  {
+    "_id": "ac30dd2d-0157-4065-bcba-dc4e9a6f13b1",
+    "colId": "d64c5452-d751-4dcf-89ff-5cda25122304",
+    "containerId": "",
+    "name": "test-get_insurance",
+    "url": "localhost:8001/i/insurance/987",
+    "method": "GET",
+    "sortNum": 20000,
+    "created": "2023-04-19T19:34:39.421Z",
+    "modified": "2023-04-19T19:49:23.512Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"provider\": \"Anthem Inc.\"\n}",
+      "form": []
+    },
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "count",
+        "value": "1"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "2234-84720"
+      }
+    ]
+  },
+  {
+    "_id": "baeeae3e-9a97-4584-814a-e196942ec951",
+    "colId": "d64c5452-d751-4dcf-89ff-5cda25122304",
+    "containerId": "",
+    "name": "test-add_insurance",
+    "url": "localhost:8001/i/insurance/987",
+    "method": "POST",
+    "sortNum": 30000,
+    "created": "2023-04-19T19:49:36.019Z",
+    "modified": "2023-04-19T19:53:16.405Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"subscriberID\": \"7307-34356\",\n  \"provider\": \"Blue Cross of Michigan\",\n  \"groupNumber\": \"057-57\",\n  \"subscriberDateOfBirth\": \"1965-03-14\",\n  \"firstNameSubscriber\": \"Griffy\",\n  \"lastNameSubscriber\": \"Locke\"\n}",
+      "form": []
+    },
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "equal",
+        "value": "Success"
+      }
+    ]
+  },
+  {
+    "_id": "a7f3cc2a-41e3-4da0-a1b9-90f5e3e08951",
+    "colId": "d64c5452-d751-4dcf-89ff-5cda25122304",
+    "containerId": "",
+    "name": "test-update_insurance",
+    "url": "localhost:8001/i/insurance/987",
+    "method": "PUT",
+    "sortNum": 40000,
+    "created": "2023-04-19T19:53:35.267Z",
+    "modified": "2023-04-19T19:55:02.251Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"subscriberID\": \"7307-34396\",\n  \"provider\": \"Blue Cross of Michigan\",\n  \"groupNumber\": \"057-57\",\n  \"subscriberDateOfBirth\": \"1965-03-14\",\n  \"firstNameSubscriber\": \"Griffy\",\n  \"lastNameSubscriber\": \"Loche\"\n}",
+      "form": []
+    },
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "equal",
+        "value": "Insurance updated successfully"
+      }
+    ]
+  },
+  {
+    "_id": "78acbce7-d01a-4555-a1f1-9f687193568c",
+    "colId": "d64c5452-d751-4dcf-89ff-5cda25122304",
+    "containerId": "",
+    "name": "test-delete_insurance",
+    "url": "localhost:8001/i/insurance/987",
+    "method": "DELETE",
+    "sortNum": 50000,
+    "created": "2023-04-19T19:55:15.642Z",
+    "modified": "2023-04-19T19:57:26.451Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"provider\": \"Blue Cross of Michigan\",\n  \"subscriberID\": \"7307-34396\"\n}",
+      "form": []
+    },
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "deleted successfully"
       }
     ]
   }
