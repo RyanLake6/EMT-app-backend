@@ -24,7 +24,7 @@ managers = Blueprint('managers', __name__)
 @managers.route('/test', methods=['GET'])
 def test():
     cursor = db.get_db().cursor()
-    cursor.execute("select * from Patient")
+    cursor.execute("select * from Shifts")
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -40,7 +40,7 @@ def test():
 @managers.route('/maintenence/<callNum>', methods=['GET'])
 def get_maintanence_datetimes(callNum):
     cursor = db.get_db().cursor()
-    cursor.execute("select * from PaymentInfo")
+    cursor.execute("select * from Shifts")
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
