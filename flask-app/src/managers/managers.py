@@ -40,7 +40,7 @@ def test():
 @managers.route('/maintenence/<callNum>', methods=['GET'])
 def get_maintanence_datetimes(callNum):
     cursor = db.get_db().cursor()
-    cursor.execute("select * from Emergency")
+    cursor.execute("select * from PaymentInfo")
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
