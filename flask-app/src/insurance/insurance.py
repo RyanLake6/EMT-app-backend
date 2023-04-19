@@ -1,15 +1,14 @@
-from flask import Blueprint, request, jsonify, make_response
+from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from src import db
 
 
 insurance = Blueprint('insurance', __name__)
 
-# Get example
 @insurance.route('/insurance/<MRN>', methods=['GET'])
-def get_insurance(MRN):
+def get_provider(MRN):
   cursor = db.get_db().cursor()
-  cursor.execute('SELECT * FROM Insurance WHERE MRN = {0}'.format(MRN))
+  cursor.execute('SELECT provider FROM Insurance WHERE MRN = {0}'.format(MRN))
   row_headers = [x[0] for x in cursor.description]
   json_data = []
   theData = cursor.fetchall()
@@ -18,12 +17,29 @@ def get_insurance(MRN):
   the_response = make_response(jsonify(json_data))
   the_response.status_code = 200
   the_response.mimetype = 'application/json'
-  # return "hit this endpoint"
+  
+  return the_response
+
+# Get example
+@insurance.route('/insurance/<MRN>/', methods=['GET'])
+def get_insurance(MRN):
+  the_data = request.get_json()
+  cursor = db.get_db().cursor()
+  cursor.execute('SELECT subscriberID, groupNumber, subscriberDateOfBirth, firstNameSubscriber, lastNameSubscriber FROM Insurance WHERE MRN = {0} AND provider = {1}'.format(MRN, the_data['provider']))
+  row_headers = [x[0] for x in cursor.description]
+  json_data = []
+  theData = cursor.fetchall()
+  for row in theData:
+      json_data.append(dict(zip(row_headers, row)))
+  the_response = make_response(jsonify(json_data))
+  the_response.status_code = 200
+  the_response.mimetype = 'application/json'
+  
   return the_response
 
 
 @insurance.route('/insurance/<MRN>', methods=['POST'])
-def add_insurance():
+def add_insurance(MRN):
   the_data = request.get_json()
   subscriber_id = the_data['subscriberID']
   group_number = the_data['groupNumber']
@@ -33,12 +49,16 @@ def add_insurance():
   subscriber_last = the_data['lastNameSubscriber']
 
   query = '''
-          INSERT INTO Insurance (subscriberID, groupNumber, provider, subscriberDateOfBirth, firstNameSubscriber, lastNameSubscriber) 
-          VALUES ({0}, {1}, {2}, {3}, {4}, {5})
-  '''.format(subscriber_id, group_number, provider, subscriber_dob, subscriber_first, subscriber_last)
+          INSERT INTO Insurance (subscriberID, groupNumber, provider, subscriberDateOfBirth, firstNameSubscriber, lastNameSubscriber, MRN)
+          VALUES (%s, %s, %s, %s, %s, %s, %s)
+  '''
+  args = (subscriber_id, provider, group_number, subscriber_dob, subscriber_first, subscriber_last, MRN)
   
   cursor = db.get_db().cursor()
-  cursor.execute(query)
+
+  current_app.logger.info(args)
+
+  cursor.execute(query, args)
   db.get_db().commit()
 
   the_response = make_response('Success')

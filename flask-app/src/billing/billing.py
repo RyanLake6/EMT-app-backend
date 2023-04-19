@@ -23,20 +23,19 @@ def get_billing(runNumber):
     return the_response
 
 
-@billing.route('/billing/<runNumber>/<cardNumber>', methods=['POST'])
-def add_card():
+@billing.route('/billing/<runNumber>', methods=['POST'])
+def add_card(runNumber):
     the_data = request.get_json()
     cost = the_data['cost']
     tax = the_data['tax']
     total = the_data['total']
-    run_number = the_data['runNumber']
     card_number = the_data['cardNumber']
 
     current_app.logger.info(the_data)
 
     cursor = db.get_db().cursor()
     query = "INSERT INTO Billing (cost, total, tax, runNumber, cardNumber) VALUES ('"
-    query += cost + "', '" + total + "', '" + tax + "', '" + run_number + "', '" + card_number + ")"
+    query += cost + "', '" + total + "', '" + tax + "', '" + runNumber + "', '" + card_number + ")"
 
     current_app.logger.info(query)
     
@@ -47,37 +46,39 @@ def add_card():
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
 
-    # return "hit this endpoint"
     return the_response
 
 
-@billing.route('/billing/<runNumber>/<cardNumber>', methods=['PUT'])
-def update_card():
+@billing.route('/billing/<runNumber>', methods=['PUT'])
+def update_card(runNumber):
     updated_info = request.get_json()
 
     query = '''
-            
+            UPDATE Billing
+            SET cost = %s,
+                total = %s,
+                tax = %s,
+                runNumber = %s,
+                cardNumber = %s,
+            WHERE runNumber = %s
     '''
-    args = (updated_info['something'], 'and more ...')
+    args = (updated_info['cost'], updated_info['total'], updated_info['tax'], runNumber, updated_info['cardNumber'], runNumber)
 
     cursor = db.get_db().cursor()
     try:
-        cursor.execute(query, args) 
-        return "billing updated successfully"
+        cursor.execute(query, args)
+        return "Billing updated successfully"
     except:
-        return "Error in updating billing"
+        return "Error in updating Billing"
 
 
 @billing.route('/billing/<runNumber>/<cardNumber>', methods=['DELETE'])
-def delete_card():
-    updated_info = request.get_json()
-
-    query = 'FILL IN'
-    args = (updated_info['something'], 'and more ...')
+def delete_card(runNumber, cardNumber):
+    query = 'DELETE FROM Billing WHERE runNumber = {0} AND cardNumber = {1}'.format(runNumber, cardNumber)
 
     cursor = db.get_db().cursor()
     try:
-        cursor.execute(query, args) 
+        cursor.execute(query)
         return "billing updated successfully"
     except:
         return "Error in updating billing"
