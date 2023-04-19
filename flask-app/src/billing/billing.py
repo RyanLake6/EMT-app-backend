@@ -39,32 +39,32 @@ def get_cc(cardNumber):
     return the_response
 
 
-@billing.route('/billing/<runNumber>/<cardNumber>', methods=['POST'])
-def add_card():
-    the_data = request.get_json()
-    cost = the_data['cost']
-    tax = the_data['tax']
-    total = the_data['total']
-    run_number = the_data['runNumber']
-    card_number = the_data['cardNumber']
+# @billing.route('/billing/<runNumber>/<cardNumber>', methods=['POST'])
+# def add_card():
+#     the_data = request.get_json()
+#     cost = the_data['cost']
+#     tax = the_data['tax']
+#     total = the_data['total']
+#     run_number = the_data['runNumber']
+#     card_number = the_data['cardNumber']
 
-    current_app.logger.info(the_data)
+#     current_app.logger.info(the_data)
 
-    cursor = db.get_db().cursor()
-    query = "INSERT INTO Billing (cost, total, tax, runNumber, cardNumber) VALUES ('"
-    query += cost + "', '" + total + "', '" + tax + "', '" + run_number + "', '" + card_number + ")"
+#     cursor = db.get_db().cursor()
+#     query = "INSERT INTO Billing (cost, total, tax, runNumber, cardNumber) VALUES ('"
+#     query += cost + "', '" + total + "', '" + tax + "', '" + run_number + "', '" + card_number + ")"
 
-    current_app.logger.info(query)
+#     current_app.logger.info(query)
     
-    cursor.execute(query)
-    db.get_db().commit()
+#     cursor.execute(query)
+#     db.get_db().commit()
 
-    the_response = make_response('Success')
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
+#     the_response = make_response('Success')
+#     the_response.status_code = 200
+#     the_response.mimetype = 'application/json'
 
-    # return "hit this endpoint"
-    return the_response
+#     # return "hit this endpoint"
+#     return the_response
 
 
 @billing.route('/billing/<CurrentCardNumber>/<NewCardNumber>', methods=['PUT'])
@@ -84,11 +84,12 @@ def update_card():
         return "Error in updating billing"
 
 
-@billing.route('/billing/<runNumber>/<cardNumber>', methods=['DELETE'])
-def delete_card():
+@billing.route('/billing/<runNumber>/<amount>', methods=['PUT'])
+def pay_bill(runNumber, amount):
     updated_info = request.get_json()
 
-    query = 'FILL IN'
+    query = 'SELECT * FROM Billing WHERE runNumber = {0}'.format(runNumber)
+   
     args = (updated_info['something'], 'and more ...')
 
     cursor = db.get_db().cursor()
@@ -97,3 +98,19 @@ def delete_card():
         return "billing updated successfully"
     except:
         return "Error in updating billing"
+    
+
+
+# @billing.route('/billing/<runNumber>/<cardNumber>', methods=['DELETE'])
+# def delete_card():
+#     updated_info = request.get_json()
+
+#     query = 'FILL IN'
+#     args = (updated_info['something'], 'and more ...')
+
+#     cursor = db.get_db().cursor()
+#     try:
+#         cursor.execute(query, args) 
+#         return "billing updated successfully"
+#     except:
+#         return "Error in updating billing"
