@@ -119,22 +119,21 @@ def getDataByRunNumber(runNumber):
 #####################################################
 #NEEDS TO BE WRITTEN
 #####################################################
-@patients.route('/patient/complaint', methods=['POST'])
+@patients.route('/patient/<MRN>/complaint', methods=['POST'])
 def send_complaint(MRN):
     the_data = request.get_json()
-    arg1 = the_data['']
-    arg2 = the_data['']
-    arg3 = the_data['']
+    rating = the_data['rating']
+    response = the_data['response']
 
     current_app.logger.info(the_data)
 
     cursor = db.get_db().cursor()
-    query = "INSERT INTO products (product_name, description, category, list_price) VALUES ('"
-    query += p_name + "', '" + p_desc + "', '" + p_category + "', " + str(p_price) + ")"
+    query = "INSERT INTO Survey (rating, response, MRN) VALUES (%s, %s, %s)"
+    args = (rating, response, MRN)
 
     current_app.logger.info(query)
     
-    cursor.execute(query)
+    cursor.execute(query, args)
     db.get_db().commit()
     cursor.close()
 
@@ -251,14 +250,19 @@ def pay_bill(runNumber):
     theData = cursor.fetchall()
     for row in theData:
         json_data.append(dict(zip(row_headers, row)))
-    the_response = jsonify(json_data)
+    the_response = json.loads(jsonify(json_data).data.decode('utf-8').replace("'", '"'))
+
+    current_app.logger.info(the_response)
+
+    # update with new total
+    query = '''
+            UPDATE Billing SET Total = %s WHERE runNumber = %s
+    '''
+    args = (the_response[0]['Total'] - updated_info['amount'], runNumber,)
 
     try:
-        # update with new total
-        diff = the_response['Total'] - updated_info['amount']
-        query = 'UPDATE Billing SET Total WHERE runNumber = {0}'.format(runNumber)
-        args = (diff)
         cursor.execute(query, args)
+        db.get_db().commit()
         cursor.close()
         return "billing updated successfully"
     except:

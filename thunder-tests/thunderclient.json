@@ -208,11 +208,11 @@
     "colId": "d64c5452-d751-4dcf-89ff-5cda25122304",
     "containerId": "",
     "name": "test-get_provider",
-    "url": "localhost:8001/p/provider/987",
+    "url": "localhost:8001/p/provider/3",
     "method": "GET",
     "sortNum": 10000,
     "created": "2023-04-19T19:33:06.763Z",
-    "modified": "2023-04-20T16:05:36.870Z",
+    "modified": "2023-04-20T17:45:14.111Z",
     "headers": [],
     "params": [],
     "tests": [
@@ -247,16 +247,16 @@
     "colId": "d64c5452-d751-4dcf-89ff-5cda25122304",
     "containerId": "",
     "name": "test-get_insurance",
-    "url": "localhost:8001/p/insurance/987",
+    "url": "localhost:8001/p/insurance/3",
     "method": "GET",
     "sortNum": 20000,
     "created": "2023-04-19T19:34:39.421Z",
-    "modified": "2023-04-20T16:07:36.759Z",
+    "modified": "2023-04-20T17:45:33.739Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"provider\": \"Anthem Inc.\"\n}",
+      "raw": "{\n  \"provider\": \"UPMC Health System\"\n}",
       "form": []
     },
     "tests": [
@@ -385,7 +385,7 @@
     "method": "PATCH",
     "sortNum": 10000,
     "created": "2023-04-20T16:28:58.107Z",
-    "modified": "2023-04-20T16:43:01.546Z",
+    "modified": "2023-04-20T17:04:21.157Z",
     "headers": [],
     "params": [],
     "body": {
@@ -399,7 +399,77 @@
         "custom": "",
         "action": "notcontains",
         "value": "Unable"
+      },
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
       }
     ]
+  },
+  {
+    "_id": "c10580ec-26ce-4c5d-909d-d832ddc5469e",
+    "colId": "084cc08e-26a4-438a-939b-af2235bdc4b8",
+    "containerId": "",
+    "name": "test-get_billing",
+    "url": "localhost:8001/p/billing/3",
+    "method": "GET",
+    "sortNum": 20000,
+    "created": "2023-04-20T17:02:10.623Z",
+    "modified": "2023-04-20T17:56:34.319Z",
+    "headers": [],
+    "params": [],
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "count",
+        "value": "1"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "4"
+      }
+    ]
+  },
+  {
+    "_id": "36544b54-e6af-4eb6-a244-9d12034d1fb9",
+    "colId": "81ac66f1-83ea-4f00-908c-1d3d732aab06",
+    "containerId": "",
+    "name": "test-send_complaint",
+    "url": "",
+    "method": "GET",
+    "sortNum": 100000,
+    "created": "2023-04-20T17:10:47.805Z",
+    "modified": "2023-04-20T17:10:47.805Z",
+    "headers": []
+  },
+  {
+    "_id": "3e1a5de6-a5f7-4c45-a673-e6f2f8085d86",
+    "colId": "084cc08e-26a4-438a-939b-af2235bdc4b8",
+    "containerId": "",
+    "name": "test-pay_bill",
+    "url": "localhost:8001/p/billing/3",
+    "method": "PUT",
+    "sortNum": 30000,
+    "created": "2023-04-20T17:25:05.456Z",
+    "modified": "2023-04-20T17:27:04.650Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"amount\": 100\n}",
+      "form": []
+    },
+    "tests": []
   }
 ]
