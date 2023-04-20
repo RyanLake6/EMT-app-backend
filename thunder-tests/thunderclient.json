@@ -380,17 +380,17 @@
     "_id": "55efb566-7d9f-48f5-b5ca-15012088ce80",
     "colId": "084cc08e-26a4-438a-939b-af2235bdc4b8",
     "containerId": "",
-    "name": "test-update-card",
+    "name": "test-update_card",
     "url": "localhost:8001/p/billing/update",
     "method": "PATCH",
     "sortNum": 10000,
     "created": "2023-04-20T16:28:58.107Z",
-    "modified": "2023-04-20T17:04:21.157Z",
+    "modified": "2023-04-20T18:47:33.901Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"currentCard\": 76,\n  \"newCard\": 12345\n}",
+      "raw": "{\n  \"currentCard\": 76,\n  \"newCard\": 12345,\n  \"cvc\": 448,\n  \"expirationDate\": \"2026-10-04\"\n}",
       "form": []
     },
     "tests": [
@@ -470,6 +470,20 @@
       "raw": "{\n  \"amount\": 100\n}",
       "form": []
     },
+    "tests": []
+  },
+  {
+    "_id": "bcbedaec-27ed-40ee-965d-a807d39a984f",
+    "colId": "084cc08e-26a4-438a-939b-af2235bdc4b8",
+    "containerId": "",
+    "name": "test-get_cc",
+    "url": "localhost:8001/p/cc/5108756503939792",
+    "method": "GET",
+    "sortNum": 40000,
+    "created": "2023-04-20T19:00:17.044Z",
+    "modified": "2023-04-20T19:00:58.418Z",
+    "headers": [],
+    "params": [],
     "tests": []
   }
 ]
