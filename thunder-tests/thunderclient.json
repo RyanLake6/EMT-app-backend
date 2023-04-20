@@ -846,5 +846,96 @@
         "value": "\"count\": 1"
       }
     ]
+  },
+  {
+    "_id": "33cf712d-d42b-410c-a974-dcc8041a5c01",
+    "colId": "cef559f2-9d4a-4c8e-8274-e34cfe809644",
+    "containerId": "",
+    "name": "Delete Employee",
+    "url": "http://localhost:8001/m/Employee/2327753651",
+    "method": "DELETE",
+    "sortNum": 150000,
+    "created": "2023-04-20T18:03:23.595Z",
+    "modified": "2023-04-20T18:04:06.558Z",
+    "headers": [],
+    "params": [],
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "equal",
+        "value": "employee deleted successfully"
+      }
+    ]
+  },
+  {
+    "_id": "5543dd3b-4f23-4eb3-8c06-0a952d29b9d6",
+    "colId": "cef559f2-9d4a-4c8e-8274-e34cfe809644",
+    "containerId": "",
+    "name": "Create Employee",
+    "url": "http://localhost:8001/m/Employee",
+    "method": "POST",
+    "sortNum": 160000,
+    "created": "2023-04-20T18:29:30.598Z",
+    "modified": "2023-04-20T18:30:14.558Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\r\n    \"firstName\": \"Ryan\",\r\n    \"lastName\": \"Lake\",\r\n    \"qual\": \"EMT\",\r\n    \"shiftID\": 4\r\n}",
+      "form": []
+    },
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "equal",
+        "value": "Success"
+      }
+    ]
+  },
+  {
+    "_id": "272d8e73-90cc-48ac-9b6c-d0efd1a5ca7a",
+    "colId": "cef559f2-9d4a-4c8e-8274-e34cfe809644",
+    "containerId": "",
+    "name": "Update Employee",
+    "url": "http://localhost:8001/m/Employee",
+    "method": "PUT",
+    "sortNum": 170000,
+    "created": "2023-04-20T18:59:25.874Z",
+    "modified": "2023-04-20T19:00:32.860Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\r\n    \"firstName\": \"Donetta-new\",\r\n    \"lastName\": \"Iglesias\",\r\n    \"qual\": \"EMT\",\r\n    \"shiftID\": 4,\r\n    \"employeeID\": 5773313359\r\n}",
+      "form": []
+    },
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "equal",
+        "value": "Employee updated successfully"
+      }
+    ]
   }
 ]
