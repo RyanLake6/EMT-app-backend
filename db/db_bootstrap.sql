@@ -185,6 +185,7 @@ CREATE TABLE EmergencyEmployee (
         FOREIGN KEY (runNumber) REFERENCES Emergency (runNumber),
     CONSTRAINT emergencyEmployeeEmployeeID
         FOREIGN KEY (employeeID) REFERENCES Employees (employeeID)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE Vitals (

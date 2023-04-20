@@ -175,71 +175,58 @@ def get_cc(cardNumber):
     return the_response
 
 
-# @patients.route('/billing/<runNumber>/<cardNumber>', methods=['POST'])
-# def add_card():
-#     the_data = request.get_json()
-#     cost = the_data['cost']
-#     tax = the_data['tax']
-#     total = the_data['total']
-#     run_number = the_data['runNumber']
-#     card_number = the_data['cardNumber']
-
-#     current_app.logger.info(the_data)
-
-#     cursor = db.get_db().cursor()
-#     query = "INSERT INTO Billing (cost, total, tax, runNumber, cardNumber) VALUES ('"
-#     query += cost + "', '" + total + "', '" + tax + "', '" + run_number + "', '" + card_number + ")"
-
-#     current_app.logger.info(query)
-    
-#     cursor.execute(query)
-#     db.get_db().commit()
-
-#     the_response = make_response('Success')
-#     the_response.status_code = 200
-#     the_response.mimetype = 'application/json'
-
-#     # return "hit this endpoint"
-#     return the_response
-
-
-#####################################################
-#NEEDS TO BE WRITTEN
-#####################################################
 @patients.route('/billing/update', methods=['PATCH'])
 def update_card():
     updated_info = request.get_json()
 
     query = '''
-            SET foreign_key_checks = 0; 
             UPDATE PaymentInfo
-            SET cardNumber = %s,
-            WHERE cardNumber = %s; 
-
-            UPDATE Billing
-            SET cardNumber = %s,
-            WHERE cardNumber = %s; 
-            SET foreign_key_checks = 1;
+            SET cardNumber = %s, CVC = %s, expirationDate = %s
+            WHERE cardNumber = %s
     '''
 
     current_app.logger.info(query)
-    args = (int(updated_info['newCard']), int(updated_info['currentCard']), int(updated_info['newCard']), int(updated_info['currentCard']))
+    args = (int(updated_info['newCard']), int(updated_info['cvc']), updated_info['expirationDate'], int(updated_info['currentCard']))
 
     current_app.logger.info(args)
 
     cursor = db.get_db().cursor()
     try:
         cursor.execute(query, args)
-        return "Billing updated successfully"
+        db.get_db().commit()
     except:
         response = make_response("<h1>Unable to update billing info</h1>")
-        response.status_code = 500
+        response.status_code = 400
+        response.mimetype = 'html'
+        return response
+    
+
+    query = '''
+            UPDATE Billing
+            SET cardNumber = %s
+            WHERE cardNumber = %s
+    '''
+
+    current_app.logger.info(query)
+    args = (int(updated_info['newCard']), int(updated_info['currentCard']))
+
+    try:
+        cursor.execute(query, args)
+        db.get_db().commit()
+        cursor.close()
+
+        response = make_response("Success")
+        response.status_code = 200
+        response.mimetype = 'application/json'
+        return response
+    except:
+        response = make_response("<h1>Unable to update billing info</h1>")
+        response.status_code = 400
+        response.mimetype = 'html'
         return response
 
 
-#####################################################
-#NEEDS TO BE WRITTEN
-#####################################################
+
 @patients.route('/billing/<runNumber>', methods=['PUT'])
 def pay_bill(runNumber):
     updated_info = request.get_json()
@@ -269,21 +256,6 @@ def pay_bill(runNumber):
     except:
         return "Error in updating billing"
     
-
-
-@patients.route('/billing/<runNumber>/<cardNumber>', methods=['DELETE'])
-def delete_card():
-    updated_info = request.get_json()
-
-    query = 'FILL IN'
-    args = (updated_info['something'], 'and more ...')
-
-    cursor = db.get_db().cursor()
-    try:
-        cursor.execute(query, args) 
-        return "billing updated successfully"
-    except:
-        return "Error in updating billing"
 
 # -------------------------- INSURANCE --------------------------
 

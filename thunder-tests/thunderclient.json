@@ -212,7 +212,7 @@
     "method": "GET",
     "sortNum": 10000,
     "created": "2023-04-19T19:33:06.763Z",
-    "modified": "2023-04-20T17:45:14.111Z",
+    "modified": "2023-04-20T19:27:43.239Z",
     "headers": [],
     "params": [],
     "tests": [
@@ -226,19 +226,13 @@
         "type": "res-body",
         "custom": "",
         "action": "count",
-        "value": "2"
+        "value": "1"
       },
       {
         "type": "res-body",
         "custom": "",
         "action": "contains",
-        "value": "Anthem"
-      },
-      {
-        "type": "res-body",
-        "custom": "",
-        "action": "contains",
-        "value": "Blue Cross"
+        "value": "UPMC Health System"
       }
     ]
   },
@@ -251,7 +245,7 @@
     "method": "GET",
     "sortNum": 20000,
     "created": "2023-04-19T19:34:39.421Z",
-    "modified": "2023-04-20T17:45:33.739Z",
+    "modified": "2023-04-20T19:28:05.156Z",
     "headers": [],
     "params": [],
     "body": {
@@ -276,7 +270,7 @@
         "type": "res-body",
         "custom": "",
         "action": "contains",
-        "value": "2234-84720"
+        "value": "7251-71185"
       }
     ]
   },
@@ -380,17 +374,17 @@
     "_id": "55efb566-7d9f-48f5-b5ca-15012088ce80",
     "colId": "084cc08e-26a4-438a-939b-af2235bdc4b8",
     "containerId": "",
-    "name": "test-update-card",
+    "name": "test-update_card",
     "url": "localhost:8001/p/billing/update",
     "method": "PATCH",
     "sortNum": 10000,
     "created": "2023-04-20T16:28:58.107Z",
-    "modified": "2023-04-20T17:04:21.157Z",
+    "modified": "2023-04-20T18:47:33.901Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"currentCard\": 76,\n  \"newCard\": 12345\n}",
+      "raw": "{\n  \"currentCard\": 76,\n  \"newCard\": 12345,\n  \"cvc\": 448,\n  \"expirationDate\": \"2026-10-04\"\n}",
       "form": []
     },
     "tests": [
@@ -405,6 +399,477 @@
         "custom": "",
         "action": "equal",
         "value": "200"
+      }
+    ]
+  },
+  {
+    "_id": "c022b5b3-fc7e-4626-a88a-027d102a8c8f",
+    "colId": "cef559f2-9d4a-4c8e-8274-e34cfe809644",
+    "containerId": "",
+    "name": "Get Employee ID",
+    "url": "http://localhost:8001/m/employees/Eugen/Buxsy",
+    "method": "GET",
+    "sortNum": 10000,
+    "created": "2023-04-20T16:43:37.519Z",
+    "modified": "2023-04-20T16:46:03.594Z",
+    "headers": [],
+    "params": [],
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": " \"employeeID\": \"1953892884\""
+      }
+    ]
+  },
+  {
+    "_id": "b1a0c1b6-159b-4024-aacd-e409c84656d9",
+    "colId": "cef559f2-9d4a-4c8e-8274-e34cfe809644",
+    "containerId": "",
+    "name": "Get Run Numbers",
+    "url": "http://localhost:8001/m/runNumbers/6928836628",
+    "method": "GET",
+    "sortNum": 20000,
+    "created": "2023-04-20T16:47:19.371Z",
+    "modified": "2023-04-20T16:48:17.293Z",
+    "headers": [],
+    "params": [],
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"runNumber\": \"802\""
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"runNumber\": \"257\""
+      }
+    ]
+  },
+  {
+    "_id": "aad57fa9-5e37-43ba-b31c-ee96a9742c02",
+    "colId": "cef559f2-9d4a-4c8e-8274-e34cfe809644",
+    "containerId": "",
+    "name": "Get Truck Info",
+    "url": "http://localhost:8001/m/Truck/1",
+    "method": "GET",
+    "sortNum": 30000,
+    "created": "2023-04-20T16:48:35.108Z",
+    "modified": "2023-04-20T16:49:23.238Z",
+    "headers": [],
+    "params": [],
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"truckID\": \"16\""
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"licensePlate\": \"RYI-841\""
+      }
+    ]
+  },
+  {
+    "_id": "c815c629-9257-4155-8aab-8103f38090cd",
+    "colId": "cef559f2-9d4a-4c8e-8274-e34cfe809644",
+    "containerId": "",
+    "name": "Get Times",
+    "url": "http://localhost:8001/m/Times/670",
+    "method": "GET",
+    "sortNum": 40000,
+    "created": "2023-04-20T16:49:39.635Z",
+    "modified": "2023-04-20T16:50:33.836Z",
+    "headers": [],
+    "params": [],
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"dispatched\": \"Sat, 07 May 2022 10:43:07 GMT\""
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"hospitalArrival\": \"Sat, 07 May 2022 11:34:07 GMT\""
+      }
+    ]
+  },
+  {
+    "_id": "7357b4ba-140e-4991-957c-00499d819f22",
+    "colId": "cef559f2-9d4a-4c8e-8274-e34cfe809644",
+    "containerId": "",
+    "name": "Get Patient",
+    "url": "http://localhost:8001/m/Patient/670",
+    "method": "GET",
+    "sortNum": 50000,
+    "created": "2023-04-20T16:50:49.050Z",
+    "modified": "2023-04-20T16:51:46.160Z",
+    "headers": [],
+    "params": [],
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"MRN\": \"616\""
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"firstName\": \"Amory\""
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"lastName\": \"Jess\""
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"dateOfBirth\": \"Fri, 22 Aug 2003 00:00:00 GMT\""
+      }
+    ]
+  },
+  {
+    "_id": "b069eacf-f2b4-41fb-bbff-c9988a57f8f8",
+    "colId": "cef559f2-9d4a-4c8e-8274-e34cfe809644",
+    "containerId": "",
+    "name": "Get Employee",
+    "url": "http://localhost:8001/m/Employee/3276964856",
+    "method": "GET",
+    "sortNum": 60000,
+    "created": "2023-04-20T16:52:00.004Z",
+    "modified": "2023-04-20T16:52:37.350Z",
+    "headers": [],
+    "params": [],
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"employeeID\": \"3276964856\""
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"firstName\": \"Ernest\""
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"lastName\": \"Walduck\""
+      }
+    ]
+  },
+  {
+    "_id": "b62b053a-50ef-4970-9751-440e378f8663",
+    "colId": "cef559f2-9d4a-4c8e-8274-e34cfe809644",
+    "containerId": "",
+    "name": "Get Surveys",
+    "url": "http://localhost:8001/m/Surveys/670",
+    "method": "GET",
+    "sortNum": 70000,
+    "created": "2023-04-20T16:52:48.481Z",
+    "modified": "2023-04-20T16:53:19.446Z",
+    "headers": [],
+    "params": [],
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"MRN\": \"616\""
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"rating\": 2"
+      }
+    ]
+  },
+  {
+    "_id": "fd395f6c-728b-433b-87eb-6e62051ac390",
+    "colId": "cef559f2-9d4a-4c8e-8274-e34cfe809644",
+    "containerId": "",
+    "name": "Get Maintenance",
+    "url": "http://localhost:8001/m/Maintenance/581",
+    "method": "GET",
+    "sortNum": 80000,
+    "created": "2023-04-20T16:53:33.232Z",
+    "modified": "2023-04-20T16:54:15.057Z",
+    "headers": [],
+    "params": [],
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"fluidsChecked\": 0"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"needsService\": 0"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"truckID\": \"23\""
+      }
+    ]
+  },
+  {
+    "_id": "68154000-9d09-4fe7-b352-5eab9905395e",
+    "colId": "cef559f2-9d4a-4c8e-8274-e34cfe809644",
+    "containerId": "",
+    "name": "Get Inventory",
+    "url": "http://localhost:8001/m/Inventory/581",
+    "method": "GET",
+    "sortNum": 90000,
+    "created": "2023-04-20T16:54:27.499Z",
+    "modified": "2023-04-20T16:55:03.395Z",
+    "headers": [],
+    "params": [],
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"count\": 95"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"name\": \"Bryophyllum Conchae Special Order\""
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"expirationDate\": \"Sat, 08 Jun 2024 00:00:00 GMT\""
+      }
+    ]
+  },
+  {
+    "_id": "1a034caa-a01b-4a87-ab4b-d19fb4d4770d",
+    "colId": "cef559f2-9d4a-4c8e-8274-e34cfe809644",
+    "containerId": "",
+    "name": "Get Survey Avg",
+    "url": "http://localhost:8001/m/SurveyAvg/3276964856",
+    "method": "GET",
+    "sortNum": 100000,
+    "created": "2023-04-20T16:55:16.457Z",
+    "modified": "2023-04-20T16:55:47.294Z",
+    "headers": [],
+    "params": [],
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"count\": 3"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"rating\": 2"
+      }
+    ]
+  },
+  {
+    "_id": "e2c1e708-c681-44e3-aebe-5c213914c8a5",
+    "colId": "cef559f2-9d4a-4c8e-8274-e34cfe809644",
+    "containerId": "",
+    "name": "Get Travel Times",
+    "url": "http://localhost:8001/m/travelTimes/3276964856",
+    "method": "GET",
+    "sortNum": 110000,
+    "created": "2023-04-20T16:56:02.598Z",
+    "modified": "2023-04-20T16:56:34.118Z",
+    "headers": [],
+    "params": [],
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"atSceneTime\": \"18.75000000\""
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"hospitalTravel\": \"16.00000000\""
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"sceneTravel\": \"23.00000000\""
+      }
+    ]
+  },
+  {
+    "_id": "7a58dc58-0340-4f41-8502-733e96101a35",
+    "colId": "cef559f2-9d4a-4c8e-8274-e34cfe809644",
+    "containerId": "",
+    "name": "Get Number of Emergencies",
+    "url": "http://localhost:8001/m/emergencyNumbers/3276964856",
+    "method": "GET",
+    "sortNum": 120000,
+    "created": "2023-04-20T16:56:49.077Z",
+    "modified": "2023-04-20T16:57:15.543Z",
+    "headers": [],
+    "params": [],
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"count\": 1"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"day\": 14"
+      }
+    ]
+  },
+  {
+    "_id": "d50e4c21-28dc-4ce8-9b11-13a3551f1c90",
+    "colId": "cef559f2-9d4a-4c8e-8274-e34cfe809644",
+    "containerId": "",
+    "name": "Get Call Types",
+    "url": "",
+    "method": "GET",
+    "sortNum": 130000,
+    "created": "2023-04-20T16:57:26.346Z",
+    "modified": "2023-04-20T16:57:26.346Z",
+    "headers": []
+  },
+  {
+    "_id": "a0c28856-5790-41f6-8a53-628af2e5362d",
+    "colId": "cef559f2-9d4a-4c8e-8274-e34cfe809644",
+    "containerId": "",
+    "name": "Get Call Types",
+    "url": "http://localhost:8001/m/callTypes/3276964856",
+    "method": "GET",
+    "sortNum": 140000,
+    "created": "2023-04-20T16:57:36.475Z",
+    "modified": "2023-04-20T16:58:01.702Z",
+    "headers": [],
+    "params": [],
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"callType\": \"Chest Pain\""
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "\"count\": 1"
       }
     ]
   },
@@ -442,18 +907,6 @@
     ]
   },
   {
-    "_id": "36544b54-e6af-4eb6-a244-9d12034d1fb9",
-    "colId": "81ac66f1-83ea-4f00-908c-1d3d732aab06",
-    "containerId": "",
-    "name": "test-send_complaint",
-    "url": "",
-    "method": "GET",
-    "sortNum": 100000,
-    "created": "2023-04-20T17:10:47.805Z",
-    "modified": "2023-04-20T17:10:47.805Z",
-    "headers": []
-  },
-  {
     "_id": "3e1a5de6-a5f7-4c45-a673-e6f2f8085d86",
     "colId": "084cc08e-26a4-438a-939b-af2235bdc4b8",
     "containerId": "",
@@ -462,7 +915,7 @@
     "method": "PUT",
     "sortNum": 30000,
     "created": "2023-04-20T17:25:05.456Z",
-    "modified": "2023-04-20T17:27:04.650Z",
+    "modified": "2023-04-20T19:20:47.497Z",
     "headers": [],
     "params": [],
     "body": {
@@ -470,6 +923,143 @@
       "raw": "{\n  \"amount\": 100\n}",
       "form": []
     },
-    "tests": []
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "successfully"
+      }
+    ]
+  },
+  {
+    "_id": "33cf712d-d42b-410c-a974-dcc8041a5c01",
+    "colId": "cef559f2-9d4a-4c8e-8274-e34cfe809644",
+    "containerId": "",
+    "name": "Delete Employee",
+    "url": "http://localhost:8001/m/Employee/2327753651",
+    "method": "DELETE",
+    "sortNum": 150000,
+    "created": "2023-04-20T18:03:23.595Z",
+    "modified": "2023-04-20T18:04:06.558Z",
+    "headers": [],
+    "params": [],
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "equal",
+        "value": "employee deleted successfully"
+      }
+    ]
+  },
+  {
+    "_id": "5543dd3b-4f23-4eb3-8c06-0a952d29b9d6",
+    "colId": "cef559f2-9d4a-4c8e-8274-e34cfe809644",
+    "containerId": "",
+    "name": "Create Employee",
+    "url": "http://localhost:8001/m/Employee",
+    "method": "POST",
+    "sortNum": 160000,
+    "created": "2023-04-20T18:29:30.598Z",
+    "modified": "2023-04-20T18:30:14.558Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\r\n    \"firstName\": \"Ryan\",\r\n    \"lastName\": \"Lake\",\r\n    \"qual\": \"EMT\",\r\n    \"shiftID\": 4\r\n}",
+      "form": []
+    },
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "equal",
+        "value": "Success"
+      }
+    ]
+  },
+  {
+    "_id": "272d8e73-90cc-48ac-9b6c-d0efd1a5ca7a",
+    "colId": "cef559f2-9d4a-4c8e-8274-e34cfe809644",
+    "containerId": "",
+    "name": "Update Employee",
+    "url": "http://localhost:8001/m/Employee",
+    "method": "PUT",
+    "sortNum": 170000,
+    "created": "2023-04-20T18:59:25.874Z",
+    "modified": "2023-04-20T19:00:32.860Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\r\n    \"firstName\": \"Donetta-new\",\r\n    \"lastName\": \"Iglesias\",\r\n    \"qual\": \"EMT\",\r\n    \"shiftID\": 4,\r\n    \"employeeID\": 5773313359\r\n}",
+      "form": []
+    },
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "equal",
+        "value": "Employee updated successfully"
+      }
+    ]
+  },
+  {
+    "_id": "bcbedaec-27ed-40ee-965d-a807d39a984f",
+    "colId": "084cc08e-26a4-438a-939b-af2235bdc4b8",
+    "containerId": "",
+    "name": "test-get_cc",
+    "url": "localhost:8001/p/cc/5108756503939792",
+    "method": "GET",
+    "sortNum": 40000,
+    "created": "2023-04-20T19:00:17.044Z",
+    "modified": "2023-04-20T19:22:43.095Z",
+    "headers": [],
+    "params": [],
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "5108756503939792"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "count",
+        "value": "1"
+      }
+    ]
   }
 ]
