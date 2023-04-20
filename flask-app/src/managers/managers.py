@@ -274,3 +274,26 @@ def get_emergency_numbers(employeeID):
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
+
+
+# Should return the number of each type of call types the employee response to
+@managers.route('/callTypes/<employeeID>', methods=['GET'])
+def get_call_types(employeeID):
+    cursor = db.get_db().cursor()
+    query = '''
+          SELECT DispatchInfo.callType, COUNT(DispatchInfo.callType) as count
+          from DispatchInfo join Emergency using (runNumber) join EmergencyEmployee using (runNumber) 
+          join Employees using (employeeID) where Employees.employeeID=%s
+          GROUP BY DispatchInfo.callType
+            '''
+    args = (employeeID)
+    cursor.execute(query, args)
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
