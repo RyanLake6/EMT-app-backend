@@ -102,7 +102,7 @@ def getPatientPMH(MRN):
 @patients.route('/runNumber/<runNumber>', methods=['GET'])
 def getDataByRunNumber(runNumber):
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT Emergency.runNumber, Emergency.MRN, pt.firstName, pt.lastName, ee.employeeID FROM Emergency join Patient pt on Emergency.MRN = pt.MRN join EmergencyEmployee ee on Emergency.runNumber = ee.runNumber WHERE pt.runNumber = {0}'.format(runNumber))
+    cursor.execute('SELECT e.firstName, e.lastName, ee.employeeID FROM Emergency join Patient pt on Emergency.MRN = pt.MRN join EmergencyEmployee ee on Emergency.runNumber = ee.runNumber join Employees e on ee.employeeID = e.employeeID WHERE pt.runNumber = {0}'.format(runNumber))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -258,7 +258,7 @@ def pay_bill(runNumber):
     query = '''
             UPDATE Billing SET Total = %s WHERE runNumber = %s
     '''
-    args = (the_response[0]['Total'] - updated_info['amount'], runNumber,)
+    args = (the_response[0]['Total'] - float(updated_info['amount']), runNumber,)
 
     try:
         cursor.execute(query, args)
@@ -289,7 +289,7 @@ def delete_card():
 @patients.route('/provider/<MRN>', methods=['GET'])
 def get_provider(MRN):
   cursor = db.get_db().cursor()
-  cursor.execute('SELECT provider FROM Insurance WHERE MRN = {0}'.format(MRN))
+  cursor.execute('SELECT provider, MRN FROM Insurance WHERE MRN = {0}'.format(MRN))
   row_headers = [x[0] for x in cursor.description]
   json_data = []
   theData = cursor.fetchall()
