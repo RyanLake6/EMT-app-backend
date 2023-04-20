@@ -8,7 +8,7 @@
     "method": "GET",
     "sortNum": 20000,
     "created": "2023-04-19T19:21:33.986Z",
-    "modified": "2023-04-19T19:23:26.555Z",
+    "modified": "2023-04-20T16:08:52.838Z",
     "headers": [],
     "params": [],
     "tests": [
@@ -22,13 +22,13 @@
         "type": "res-body",
         "custom": "",
         "action": "contains",
-        "value": "Ethelyn"
+        "value": "123"
       },
       {
         "type": "res-body",
         "custom": "",
-        "action": "contains",
-        "value": "Ryton"
+        "action": "count",
+        "value": "1"
       }
     ]
   },
@@ -208,11 +208,11 @@
     "colId": "d64c5452-d751-4dcf-89ff-5cda25122304",
     "containerId": "",
     "name": "test-get_provider",
-    "url": "localhost:8001/i/provider/987",
+    "url": "localhost:8001/p/provider/3",
     "method": "GET",
     "sortNum": 10000,
     "created": "2023-04-19T19:33:06.763Z",
-    "modified": "2023-04-19T19:37:26.317Z",
+    "modified": "2023-04-20T19:27:43.239Z",
     "headers": [],
     "params": [],
     "tests": [
@@ -226,19 +226,13 @@
         "type": "res-body",
         "custom": "",
         "action": "count",
-        "value": "2"
+        "value": "1"
       },
       {
         "type": "res-body",
         "custom": "",
         "action": "contains",
-        "value": "Anthem"
-      },
-      {
-        "type": "res-body",
-        "custom": "",
-        "action": "contains",
-        "value": "Blue Cross"
+        "value": "UPMC Health System"
       }
     ]
   },
@@ -247,16 +241,16 @@
     "colId": "d64c5452-d751-4dcf-89ff-5cda25122304",
     "containerId": "",
     "name": "test-get_insurance",
-    "url": "localhost:8001/i/insurance/987",
+    "url": "localhost:8001/p/insurance/3",
     "method": "GET",
     "sortNum": 20000,
     "created": "2023-04-19T19:34:39.421Z",
-    "modified": "2023-04-19T19:49:23.512Z",
+    "modified": "2023-04-20T19:28:05.156Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"provider\": \"Anthem Inc.\"\n}",
+      "raw": "{\n  \"provider\": \"UPMC Health System\"\n}",
       "form": []
     },
     "tests": [
@@ -276,7 +270,7 @@
         "type": "res-body",
         "custom": "",
         "action": "contains",
-        "value": "2234-84720"
+        "value": "7251-71185"
       }
     ]
   },
@@ -285,11 +279,11 @@
     "colId": "d64c5452-d751-4dcf-89ff-5cda25122304",
     "containerId": "",
     "name": "test-add_insurance",
-    "url": "localhost:8001/i/insurance/987",
+    "url": "localhost:8001/p/insurance/987",
     "method": "POST",
     "sortNum": 30000,
     "created": "2023-04-19T19:49:36.019Z",
-    "modified": "2023-04-19T19:53:16.405Z",
+    "modified": "2023-04-20T16:11:14.670Z",
     "headers": [],
     "params": [],
     "body": {
@@ -317,11 +311,11 @@
     "colId": "d64c5452-d751-4dcf-89ff-5cda25122304",
     "containerId": "",
     "name": "test-update_insurance",
-    "url": "localhost:8001/i/insurance/987",
+    "url": "localhost:8001/p/insurance/987",
     "method": "PUT",
     "sortNum": 40000,
     "created": "2023-04-19T19:53:35.267Z",
-    "modified": "2023-04-19T19:55:02.251Z",
+    "modified": "2023-04-20T16:11:13.546Z",
     "headers": [],
     "params": [],
     "body": {
@@ -349,11 +343,11 @@
     "colId": "d64c5452-d751-4dcf-89ff-5cda25122304",
     "containerId": "",
     "name": "test-delete_insurance",
-    "url": "localhost:8001/i/insurance/987",
+    "url": "localhost:8001/p/insurance/987",
     "method": "DELETE",
     "sortNum": 50000,
     "created": "2023-04-19T19:55:15.642Z",
-    "modified": "2023-04-19T19:57:26.451Z",
+    "modified": "2023-04-20T16:11:12.249Z",
     "headers": [],
     "params": [],
     "body": {
@@ -373,6 +367,38 @@
         "custom": "",
         "action": "contains",
         "value": "deleted successfully"
+      }
+    ]
+  },
+  {
+    "_id": "55efb566-7d9f-48f5-b5ca-15012088ce80",
+    "colId": "084cc08e-26a4-438a-939b-af2235bdc4b8",
+    "containerId": "",
+    "name": "test-update_card",
+    "url": "localhost:8001/p/billing/update",
+    "method": "PATCH",
+    "sortNum": 10000,
+    "created": "2023-04-20T16:28:58.107Z",
+    "modified": "2023-04-20T18:47:33.901Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"currentCard\": 76,\n  \"newCard\": 12345,\n  \"cvc\": 448,\n  \"expirationDate\": \"2026-10-04\"\n}",
+      "form": []
+    },
+    "tests": [
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "notcontains",
+        "value": "Unable"
+      },
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
       }
     ]
   },
@@ -848,6 +874,71 @@
     ]
   },
   {
+    "_id": "c10580ec-26ce-4c5d-909d-d832ddc5469e",
+    "colId": "084cc08e-26a4-438a-939b-af2235bdc4b8",
+    "containerId": "",
+    "name": "test-get_billing",
+    "url": "localhost:8001/p/billing/3",
+    "method": "GET",
+    "sortNum": 20000,
+    "created": "2023-04-20T17:02:10.623Z",
+    "modified": "2023-04-20T17:56:34.319Z",
+    "headers": [],
+    "params": [],
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "count",
+        "value": "1"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "4"
+      }
+    ]
+  },
+  {
+    "_id": "3e1a5de6-a5f7-4c45-a673-e6f2f8085d86",
+    "colId": "084cc08e-26a4-438a-939b-af2235bdc4b8",
+    "containerId": "",
+    "name": "test-pay_bill",
+    "url": "localhost:8001/p/billing/3",
+    "method": "PUT",
+    "sortNum": 30000,
+    "created": "2023-04-20T17:25:05.456Z",
+    "modified": "2023-04-20T19:20:47.497Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"amount\": 100\n}",
+      "form": []
+    },
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "successfully"
+      }
+    ]
+  },
+  {
     "_id": "33cf712d-d42b-410c-a974-dcc8041a5c01",
     "colId": "cef559f2-9d4a-4c8e-8274-e34cfe809644",
     "containerId": "",
@@ -935,6 +1026,39 @@
         "custom": "",
         "action": "equal",
         "value": "Employee updated successfully"
+      }
+    ]
+  },
+  {
+    "_id": "bcbedaec-27ed-40ee-965d-a807d39a984f",
+    "colId": "084cc08e-26a4-438a-939b-af2235bdc4b8",
+    "containerId": "",
+    "name": "test-get_cc",
+    "url": "localhost:8001/p/cc/5108756503939792",
+    "method": "GET",
+    "sortNum": 40000,
+    "created": "2023-04-20T19:00:17.044Z",
+    "modified": "2023-04-20T19:22:43.095Z",
+    "headers": [],
+    "params": [],
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "5108756503939792"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "count",
+        "value": "1"
       }
     ]
   }
