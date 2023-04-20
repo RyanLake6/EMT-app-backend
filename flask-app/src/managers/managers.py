@@ -1,27 +1,8 @@
 from flask import Blueprint, request, jsonify, make_response
-import json
 from src import db
-
 
 managers = Blueprint('managers', __name__)
 
-# testing
-@managers.route('/test', methods=['GET'])
-def test():
-    cursor = db.get_db().cursor()
-    cursor.execute("SELECT TIMEDIFF('2022-10-27 07:51:33', '2022-10-27 07:45:33')")
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        # Convert timedelta object to string
-        row = list(row)
-        row[0] = str(row[0])
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
 
 # Should return the employee id based of employee first and last name
 @managers.route('/employees/<firstName>/<lastName>', methods=['GET'])
