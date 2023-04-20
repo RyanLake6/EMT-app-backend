@@ -280,7 +280,7 @@ def get_call_types(employeeID):
     the_response.mimetype = 'application/json'
     return the_response
 
-
+# deletes the employee given the employee ID
 @managers.route('/Employee/<employeeID>', methods=['DELETE'])
 def delete_employee(employeeID):
   query = '''
@@ -296,7 +296,7 @@ def delete_employee(employeeID):
   except:
       return "Error in deleting employee"
   
-
+# creates a new employee
 @managers.route('/Employee', methods=['POST'])
 def add_employee():
   the_data = request.get_json()
@@ -314,8 +314,6 @@ def add_employee():
   
   cursor = db.get_db().cursor()
 
-#   current_app.logger.info(args)
-
   cursor.execute(query, args)
   db.get_db().commit()
 
@@ -326,7 +324,7 @@ def add_employee():
   return the_response
 
 
-
+# Updates an employee
 @managers.route('/Employee', methods=['PUT'])
 def update_employee():
   the_data = request.get_json()
