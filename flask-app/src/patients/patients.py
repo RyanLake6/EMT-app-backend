@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify, make_response, current_app
 import json
+from datetime import datetime
 from src import db
 
 
@@ -364,6 +365,9 @@ def update_insurance(MRN):
   subscriber_first = the_data['firstNameSubscriber']
   subscriber_last = the_data['lastNameSubscriber']
 
+    #Sun, 11 Nov 1962 00:00:00 GMT
+  subscriber_dob = datetime.strptime(subscriber_dob, '%a, %d %b %Y %H:%M:%S %Z').date()
+
   query = '''
           UPDATE Insurance
           SET subscriberID = %s,
@@ -378,7 +382,8 @@ def update_insurance(MRN):
 
   cursor = db.get_db().cursor()
   try:
-      cursor.execute(query, args) 
+      cursor.execute(query, args)
+      db.get_db().commit()
       return "Insurance updated successfully"
   except:
       return "Error in updating Insurance"
@@ -394,6 +399,7 @@ def delete_insurance(MRN):
   cursor = db.get_db().cursor()
   try:
       cursor.execute(query, args) 
+      db.get_db().commit()
       return "Insurance deleted successfully"
   except:
       return "Error in deleting insurance"
