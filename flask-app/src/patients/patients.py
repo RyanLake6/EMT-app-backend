@@ -211,18 +211,28 @@ def update_card():
     updated_info = request.get_json()
 
     query = '''
-            UPDATE Billing
+            SET foreign_key_checks = 0; 
+            
+            UPDATE PaymentInfo
             SET cardNumber = %s,
-            WHERE cardNumber = %s
+            WHERE cardNumber = %s; 
+
+            SET foreign_key_checks = 1;
     '''
-    args = (updated_info['newCard'], updated_info['currentCard'])
+
+    current_app.logger.info(query)
+    args = (int(updated_info['newCard']), int(updated_info['currentCard']), int(updated_info['newCard']), int(updated_info['currentCard']))
+
+    current_app.logger.info(args)
 
     cursor = db.get_db().cursor()
     try:
         cursor.execute(query, args)
         return "Billing updated successfully"
     except:
-        return "Error in updating Billing"
+        response = make_response("<h1>Unable to update billing info</h1>")
+        response.status_code = 500
+        return response
 
 
 #####################################################
@@ -254,19 +264,19 @@ def pay_bill(runNumber):
     
 
 
-# @patients.route('/billing/<runNumber>/<cardNumber>', methods=['DELETE'])
-# def delete_card():
-#     updated_info = request.get_json()
+@patients.route('/billing/<runNumber>/<cardNumber>', methods=['DELETE'])
+def delete_card():
+    updated_info = request.get_json()
 
-#     query = 'FILL IN'
-#     args = (updated_info['something'], 'and more ...')
+    query = 'FILL IN'
+    args = (updated_info['something'], 'and more ...')
 
-#     cursor = db.get_db().cursor()
-#     try:
-#         cursor.execute(query, args) 
-#         return "billing updated successfully"
-#     except:
-#         return "Error in updating billing"
+    cursor = db.get_db().cursor()
+    try:
+        cursor.execute(query, args) 
+        return "billing updated successfully"
+    except:
+        return "Error in updating billing"
 
 # -------------------------- INSURANCE --------------------------
 
