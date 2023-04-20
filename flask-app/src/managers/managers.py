@@ -1,3 +1,4 @@
+from random import randint
 from flask import Blueprint, request, jsonify, make_response
 from src import db
 
@@ -278,3 +279,77 @@ def get_call_types(employeeID):
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
+
+
+@managers.route('/Employee/<employeeID>', methods=['DELETE'])
+def delete_employee(employeeID):
+  query = '''
+          DELETE FROM Employees WHERE employeeID=%s
+            '''
+  args = (employeeID)
+
+  cursor = db.get_db().cursor()
+  try:
+      cursor.execute(query, args) 
+      db.get_db().commit()
+      return "employee deleted successfully"
+  except:
+      return "Error in deleting employee"
+  
+
+@managers.route('/Employee', methods=['POST'])
+def add_employee():
+  the_data = request.get_json()
+  firstName = the_data['firstName']
+  lastName = the_data['lastName']
+  qual = the_data['qual']
+  shiftID = the_data['shiftID']
+  emloyeeID = randint(100000, 999999)
+
+  query = '''
+          INSERT INTO Employees (employeeID,firstName,lastName,qual,shiftID)
+          VALUES (%s, %s, %s, %s, %s)
+          '''
+  args = (emloyeeID, firstName, lastName, qual, shiftID)
+  
+  cursor = db.get_db().cursor()
+
+#   current_app.logger.info(args)
+
+  cursor.execute(query, args)
+  db.get_db().commit()
+
+  the_response = make_response('Success')
+  the_response.status_code = 200
+  the_response.mimetype = 'application/json'
+
+  return the_response
+
+
+
+@managers.route('/Employee', methods=['PUT'])
+def update_employee():
+  the_data = request.get_json()
+  employeeID = the_data['employeeID']
+  firstName = the_data['firstName']
+  lastName = the_data['lastName']
+  qual = the_data['qual']
+  shiftID = the_data['shiftID']
+
+  query = '''
+          UPDATE Employees
+          SET firstName = %s,
+              lastName = %s,
+              qual = %s,
+              shiftID = %s
+          where employeeID = %s
+  '''
+  args = (firstName, lastName, qual, shiftID, employeeID)
+
+  cursor = db.get_db().cursor()
+  try:
+      cursor.execute(query, args) 
+      db.get_db().commit()
+      return "Employee updated successfully"
+  except:
+      return "Error in updating Employee"
