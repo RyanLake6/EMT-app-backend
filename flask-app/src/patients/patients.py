@@ -212,11 +212,13 @@ def update_card():
 
     query = '''
             SET foreign_key_checks = 0; 
-            
             UPDATE PaymentInfo
             SET cardNumber = %s,
             WHERE cardNumber = %s; 
 
+            UPDATE Billing
+            SET cardNumber = %s,
+            WHERE cardNumber = %s; 
             SET foreign_key_checks = 1;
     '''
 

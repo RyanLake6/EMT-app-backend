@@ -8,7 +8,7 @@
     "method": "GET",
     "sortNum": 20000,
     "created": "2023-04-19T19:21:33.986Z",
-    "modified": "2023-04-19T19:23:26.555Z",
+    "modified": "2023-04-20T16:08:52.838Z",
     "headers": [],
     "params": [],
     "tests": [
@@ -22,13 +22,13 @@
         "type": "res-body",
         "custom": "",
         "action": "contains",
-        "value": "Ethelyn"
+        "value": "123"
       },
       {
         "type": "res-body",
         "custom": "",
-        "action": "contains",
-        "value": "Ryton"
+        "action": "count",
+        "value": "1"
       }
     ]
   },
@@ -208,11 +208,11 @@
     "colId": "d64c5452-d751-4dcf-89ff-5cda25122304",
     "containerId": "",
     "name": "test-get_provider",
-    "url": "localhost:8001/i/provider/987",
+    "url": "localhost:8001/p/provider/987",
     "method": "GET",
     "sortNum": 10000,
     "created": "2023-04-19T19:33:06.763Z",
-    "modified": "2023-04-19T19:37:26.317Z",
+    "modified": "2023-04-20T16:05:36.870Z",
     "headers": [],
     "params": [],
     "tests": [
@@ -247,11 +247,11 @@
     "colId": "d64c5452-d751-4dcf-89ff-5cda25122304",
     "containerId": "",
     "name": "test-get_insurance",
-    "url": "localhost:8001/i/insurance/987",
+    "url": "localhost:8001/p/insurance/987",
     "method": "GET",
     "sortNum": 20000,
     "created": "2023-04-19T19:34:39.421Z",
-    "modified": "2023-04-19T19:49:23.512Z",
+    "modified": "2023-04-20T16:07:36.759Z",
     "headers": [],
     "params": [],
     "body": {
@@ -285,11 +285,11 @@
     "colId": "d64c5452-d751-4dcf-89ff-5cda25122304",
     "containerId": "",
     "name": "test-add_insurance",
-    "url": "localhost:8001/i/insurance/987",
+    "url": "localhost:8001/p/insurance/987",
     "method": "POST",
     "sortNum": 30000,
     "created": "2023-04-19T19:49:36.019Z",
-    "modified": "2023-04-19T19:53:16.405Z",
+    "modified": "2023-04-20T16:11:14.670Z",
     "headers": [],
     "params": [],
     "body": {
@@ -317,11 +317,11 @@
     "colId": "d64c5452-d751-4dcf-89ff-5cda25122304",
     "containerId": "",
     "name": "test-update_insurance",
-    "url": "localhost:8001/i/insurance/987",
+    "url": "localhost:8001/p/insurance/987",
     "method": "PUT",
     "sortNum": 40000,
     "created": "2023-04-19T19:53:35.267Z",
-    "modified": "2023-04-19T19:55:02.251Z",
+    "modified": "2023-04-20T16:11:13.546Z",
     "headers": [],
     "params": [],
     "body": {
@@ -349,11 +349,11 @@
     "colId": "d64c5452-d751-4dcf-89ff-5cda25122304",
     "containerId": "",
     "name": "test-delete_insurance",
-    "url": "localhost:8001/i/insurance/987",
+    "url": "localhost:8001/p/insurance/987",
     "method": "DELETE",
     "sortNum": 50000,
     "created": "2023-04-19T19:55:15.642Z",
-    "modified": "2023-04-19T19:57:26.451Z",
+    "modified": "2023-04-20T16:11:12.249Z",
     "headers": [],
     "params": [],
     "body": {
@@ -373,6 +373,32 @@
         "custom": "",
         "action": "contains",
         "value": "deleted successfully"
+      }
+    ]
+  },
+  {
+    "_id": "55efb566-7d9f-48f5-b5ca-15012088ce80",
+    "colId": "084cc08e-26a4-438a-939b-af2235bdc4b8",
+    "containerId": "",
+    "name": "test-update-card",
+    "url": "localhost:8001/p/billing/update",
+    "method": "PATCH",
+    "sortNum": 10000,
+    "created": "2023-04-20T16:28:58.107Z",
+    "modified": "2023-04-20T16:43:01.546Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"currentCard\": 76,\n  \"newCard\": 12345\n}",
+      "form": []
+    },
+    "tests": [
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "notcontains",
+        "value": "Unable"
       }
     ]
   }
