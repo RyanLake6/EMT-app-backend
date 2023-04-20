@@ -9,16 +9,18 @@ managers = Blueprint('managers', __name__)
 @managers.route('/test', methods=['GET'])
 def test():
     cursor = db.get_db().cursor()
-    cursor.execute("SELECT TIMEDIFF('2000:01:01 00:00:00', '2000:01:01 00:00:00.000001')")
+    cursor.execute("SELECT TIMEDIFF('2022-10-27 07:51:33', '2022-10-27 07:45:33')")
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
     for row in theData:
+        # Convert timedelta object to string
+        row = list(row)
+        row[0] = str(row[0])
         json_data.append(dict(zip(row_headers, row)))
     the_response = make_response(jsonify(json_data))
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
-    # return "hit this endpoint"
     return the_response
 
 # Should return the employee id based of employee first and last name
@@ -230,7 +232,9 @@ def get_survey_avg(employeeID):
 def get_travel_times(employeeID):
     cursor = db.get_db().cursor()
     query = '''
-          SELECT *
+          SELECT avg(TIMEDIFF(Times.hospitalArrival, Times.departScene)) / 100 as hospitalTravel,
+          avg(TIMEDIFF(Times.onScene, Times.dispatched)) / 100 as sceneTravel,
+          avg(TIMEDIFF(Times.departScene, Times.onScene)) / 100 as atSceneTime
           from Times join Emergency using (runNumber) join EmergencyEmployee using (runNumber) join Employees using (employeeID) where Employees.employeeID=%s
             '''
     args = (employeeID)
@@ -239,6 +243,11 @@ def get_travel_times(employeeID):
     json_data = []
     theData = cursor.fetchall()
     for row in theData:
+        # Convert timedelta object to string
+        row = list(row)
+        row[0] = str(row[0])
+        row[1] = str(row[1])
+        row[2] = str(row[2])
         json_data.append(dict(zip(row_headers, row)))
     the_response = make_response(jsonify(json_data))
     the_response.status_code = 200
