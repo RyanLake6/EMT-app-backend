@@ -140,6 +140,8 @@ def send_complaint(MRN):
 
     return "success!"
 
+# -------------------------- BILLING --------------------------
+
 @patients.route('/billing/<runNumber>', methods=['GET'])
 def get_billing(runNumber):
     cursor = db.get_db().cursor()
@@ -204,20 +206,16 @@ def get_cc(cardNumber):
 #####################################################
 #NEEDS TO BE WRITTEN
 #####################################################
-@patients.route('/billing/<CurrentCardNumber>/<NewCardNumber>', methods=['PUT'])
+@patients.route('/billing/update', methods=['PATCH'])
 def update_card():
     updated_info = request.get_json()
 
     query = '''
             UPDATE Billing
-            SET cost = %s,
-                total = %s,
-                tax = %s,
-                runNumber = %s,
-                cardNumber = %s,
-            WHERE runNumber = %s
+            SET cardNumber = %s,
+            WHERE cardNumber = %s
     '''
-    args = (updated_info['cost'], updated_info['total'], updated_info['tax'], runNumber, updated_info['cardNumber'], runNumber)
+    args = (updated_info['newCard'], updated_info['currentCard'])
 
     cursor = db.get_db().cursor()
     try:
@@ -230,17 +228,26 @@ def update_card():
 #####################################################
 #NEEDS TO BE WRITTEN
 #####################################################
-@patients.route('/billing/<runNumber>/<amount>', methods=['PUT'])
-def pay_bill(runNumber, amount):
+@patients.route('/billing/<runNumber>', methods=['PUT'])
+def pay_bill(runNumber):
     updated_info = request.get_json()
-
-    query = 'SELECT * FROM Billing WHERE runNumber = {0}'.format(runNumber)
-   
-    args = (updated_info['something'], 'and more ...')
-
     cursor = db.get_db().cursor()
+
+    cursor.execute('SELECT Total FROM Billing WHERE runNumber = {0}'.format(runNumber))
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = jsonify(json_data)
+
     try:
-        cursor.execute(query)
+        # update with new total
+        diff = the_response['Total'] - updated_info['amount']
+        query = 'UPDATE Billing SET Total WHERE runNumber = {0}'.format(runNumber)
+        args = (diff)
+        cursor.execute(query, args)
+        cursor.close()
         return "billing updated successfully"
     except:
         return "Error in updating billing"
@@ -260,6 +267,8 @@ def pay_bill(runNumber, amount):
 #         return "billing updated successfully"
 #     except:
 #         return "Error in updating billing"
+
+# -------------------------- INSURANCE --------------------------
 
 @patients.route('/provider/<MRN>', methods=['GET'])
 def get_provider(MRN):
