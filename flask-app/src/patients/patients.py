@@ -367,7 +367,7 @@ def delete_insurance(MRN):
   cursor = db.get_db().cursor()
   try:
       cursor.execute(query, args)
-      db.get_db().execute()
+      db.get_db().commit()
       return "Insurance deleted successfully"
   except:
       return "Error in deleting insurance"
