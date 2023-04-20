@@ -32,13 +32,9 @@ def create_app():
     # Import the various routes
     from src.managers.managers import managers
     from src.patients.patients import patients
-    from src.billing.billing import billing
-    from src.insurance.insurance import insurance
 
     # Register the routes that we just imported so they can be properly handled
     app.register_blueprint(managers,   url_prefix='/m')
     app.register_blueprint(patients,   url_prefix='/p')
-    app.register_blueprint(billing,   url_prefix='/b')
-    app.register_blueprint(insurance,   url_prefix='/i')
 
     return app
