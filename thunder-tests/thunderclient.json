@@ -315,12 +315,12 @@
     "method": "PUT",
     "sortNum": 40000,
     "created": "2023-04-19T19:53:35.267Z",
-    "modified": "2023-04-20T16:11:13.546Z",
+    "modified": "2023-04-20T23:59:30.999Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"subscriberID\": \"7307-34396\",\n  \"provider\": \"Blue Cross of Michigan\",\n  \"groupNumber\": \"057-57\",\n  \"subscriberDateOfBirth\": \"1965-03-14\",\n  \"firstNameSubscriber\": \"Griffy\",\n  \"lastNameSubscriber\": \"Loche\"\n}",
+      "raw": "{\n  \"subscriberID\": \"7307-34396\",\n  \"provider\": \"Blue Cross of Michigan\",\n  \"groupNumber\": \"057-57\",\n  \"subscriberDateOfBirth\": \"Sun, 08 Nov 1962 00:00:00 GMT\",\n  \"firstNameSubscriber\": \"Griffy\",\n  \"lastNameSubscriber\": \"Loche\"\n}",
       "form": []
     },
     "tests": [
@@ -471,7 +471,7 @@
     "method": "GET",
     "sortNum": 30000,
     "created": "2023-04-20T16:48:35.108Z",
-    "modified": "2023-04-20T16:49:23.238Z",
+    "modified": "2023-04-21T00:00:21.703Z",
     "headers": [],
     "params": [],
     "tests": [
@@ -485,13 +485,13 @@
         "type": "res-body",
         "custom": "",
         "action": "contains",
-        "value": "\"truckID\": \"16\""
+        "value": "\"truckID\": \"26\""
       },
       {
         "type": "res-body",
         "custom": "",
         "action": "contains",
-        "value": "\"licensePlate\": \"RYI-841\""
+        "value": "\"licensePlate\": \"UZF-221\""
       }
     ]
   },
@@ -829,18 +829,6 @@
     ]
   },
   {
-    "_id": "d50e4c21-28dc-4ce8-9b11-13a3551f1c90",
-    "colId": "cef559f2-9d4a-4c8e-8274-e34cfe809644",
-    "containerId": "",
-    "name": "Get Call Types",
-    "url": "",
-    "method": "GET",
-    "sortNum": 130000,
-    "created": "2023-04-20T16:57:26.346Z",
-    "modified": "2023-04-20T16:57:26.346Z",
-    "headers": []
-  },
-  {
     "_id": "a0c28856-5790-41f6-8a53-628af2e5362d",
     "colId": "cef559f2-9d4a-4c8e-8274-e34cfe809644",
     "containerId": "",
@@ -1034,11 +1022,11 @@
     "colId": "084cc08e-26a4-438a-939b-af2235bdc4b8",
     "containerId": "",
     "name": "test-get_cc",
-    "url": "localhost:8001/p/cc/5108756503939792",
+    "url": "localhost:8001/p/cc/5108759734079347",
     "method": "GET",
     "sortNum": 40000,
     "created": "2023-04-20T19:00:17.044Z",
-    "modified": "2023-04-20T19:22:43.095Z",
+    "modified": "2023-04-21T00:14:33.373Z",
     "headers": [],
     "params": [],
     "tests": [
@@ -1052,7 +1040,7 @@
         "type": "res-body",
         "custom": "",
         "action": "contains",
-        "value": "5108756503939792"
+        "value": "5048375647443976"
       },
       {
         "type": "res-body",
