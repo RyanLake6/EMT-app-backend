@@ -1,6 +1,8 @@
 # EmergenKnow
 EmergenKnow is a service designed to assist in managing critical emergency services. This specialized software enables organizations to optimize the efficiency and effectiveness of their operations by providing real-time information about resources and facilities. The relational database maintains a comprehensive record of every activity related to patient care - from dispatch to transportation and documentation. EmergenKnow helps managers track performance metrics such as response times and resource utilization, and allows patients to review their treatment from the EMS service.
 
+[Click here](https://drive.google.com/file/d/1Fi31yXqwZWVHFot9u2tF1NXFJ2DwwHE0/view?usp=sharing) for a demo video showcasing how this application works.
+
 ## Setup
 This repo contains setup for spinning up 3 Docker containers: 
 - A MySQL 8 container for obvious reasons
